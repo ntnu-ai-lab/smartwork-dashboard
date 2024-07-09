@@ -1,0 +1,179 @@
+<h3 class=" mt-5 mb-5"> User Information</h3>
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Study Id </th>
+            <th>User Name </th>
+            <th>Name </th>
+            <th> Phone </th>
+            <th>Email</th>
+            <th>Called</th>
+            <th>Eligibility </th>
+            <th>Baseline </th>
+            <th>F1 </th>
+            <th>F2 </th>
+            <th>RCT Arm </th>
+            <th>Actions </th>
+
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let user of lspatients">
+            <td>{{user.navId}}</td>
+            <td>{{user.patientId}} </td>
+            <td> {{user.firstname}} {{ user.lastname }}</td>
+            <td>{{user.phone}}</td>
+            <td>{{user.email}}</td>
+            <td><button [disabled]="user.called" mat-raised-button class="hover-class" (click)="calledSubmit(user)"> Yes </button>
+                
+          </td>
+          <td><button [disabled]="user.activated" flat-raised class="btn btn-sm btn-danger mx-1" (click)="activateBaseline(user)"> Activate </button>
+            <!--route to edit reservation, back to the form.-->
+      </td>
+      <td>{{user.baselineActivated  | date }}</td>
+      <td>{{user.follwoup2Date  | date }}</td>
+      <td>{{user.follwoup3Date  | date }}</td>
+      <td> <select #group (change)="onRctArmChange(user, group.value)">
+        <option default>Select group</option>
+        <option value="intervention">Intervention</option>
+        <option value="control">Control</option>
+      </select> </td>
+      <td><button [disabled]="!user.rctGroup" flat-raised [ngClass]="{
+        'btn btn-sm btn-secondary mx-1': !user.groupConfirmed,
+        'btn btn-sm btn-success mx-1':user.groupConfirmed }" (click)="onRctArmConfirm(user)">  {{ user.groupConfirmed ? 'Done' : 'Confirm' }} </button></td>
+    
+        </tr>
+    </tbody>
+</table> 
+
+
+<!-- 
+<h3 class="mt-5 mb-2">User Information</h3>
+<table mat-table [dataSource]="lspatients" class="mat-elevation-z8">
+  <ng-container matColumnDef="navId">
+    <th mat-header-cell *matHeaderCellDef> Study Id </th>
+    <td mat-cell *matCellDef="let user"> {{user.navId}} </td>
+  </ng-container>
+  <ng-container matColumnDef="patientId">
+    <th mat-header-cell *matHeaderCellDef> User Name </th>
+    <td mat-cell *matCellDef="let user"> {{user.patientId}} </td>
+  </ng-container>
+
+  <ng-container matColumnDef="name">
+    <th mat-header-cell *matHeaderCellDef> Name </th>
+    <td mat-cell *matCellDef="let user"> {{user.firstname}} {{user.lastname}} </td>
+  </ng-container>
+
+
+  <ng-container matColumnDef="phone">
+    <th mat-header-cell *matHeaderCellDef> Phone </th>
+    <td mat-cell *matCellDef="let user"> {{user.phone}} </td>
+  </ng-container>
+
+
+  <ng-container matColumnDef="email">
+    <th mat-header-cell *matHeaderCellDef> Email </th>
+    <td mat-cell *matCellDef="let user"> {{user.email}} </td>
+  </ng-container>
+
+
+  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+  <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+</table>
+
+ 
+<h3 class="mt-5 mb-2">User Information</h3>
+
+<table mat-table [dataSource]="lspatients" class="mat-elevation-z8">
+
+
+  <ng-container matColumnDef="navId">
+    <th mat-header-cell *matHeaderCellDef> Study Id </th>
+    <td mat-cell *matCellDef="let user"> {{user.navId}} </td>
+  </ng-container>
+
+
+  <ng-container matColumnDef="patientId">
+    <th mat-header-cell *matHeaderCellDef> User Name </th>
+    <td mat-cell *matCellDef="let user"> {{user.patientId}} </td>
+  </ng-container>
+
+
+  <ng-container matColumnDef="name">
+    <th mat-header-cell *matHeaderCellDef> Name </th>
+    <td mat-cell *matCellDef="let user"> {{user.firstname}} {{user.lastname}} </td>
+  </ng-container>
+
+
+  <ng-container matColumnDef="phone">
+    <th mat-header-cell *matHeaderCellDef> Phone </th>
+    <td mat-cell *matCellDef="let user"> {{user.phone}} </td>
+  </ng-container>
+
+
+  <ng-container matColumnDef="email">
+    <th mat-header-cell *matHeaderCellDef> Email </th>
+    <td mat-cell *matCellDef="let user"> {{user.email}} </td>
+  </ng-container>
+
+
+  <ng-container matColumnDef="called">
+    <th mat-header-cell *matHeaderCellDef> Called </th>
+    <td mat-cell *matCellDef="let user">
+      <mat-form-field>
+        <mat-select [(value)]="user.called" (selectionChange)="onCalledChange(user.patientId, $event.value)">
+          <mat-option value="yes">Yes</mat-option>
+          <mat-option value="no">No</mat-option>
+        </mat-select>
+      </mat-form-field>
+    </td>
+  </ng-container>
+
+  <ng-container matColumnDef="eligibility">
+    <th mat-header-cell *matHeaderCellDef> Eligibility </th>
+    <td mat-cell *matCellDef="let user">
+      <mat-form-field>
+        <mat-select [(value)]="user.eligibility" (selectionChange)="onEligibilityChange(user.patientId, $event.value)">
+          <mat-option value="yes">Yes</mat-option>
+          <mat-option value="no">No</mat-option>
+        </mat-select>
+      </mat-form-field>
+    </td>
+  </ng-container>
+
+
+  <ng-container matColumnDef="rctArm">
+    <th mat-header-cell *matHeaderCellDef> RCT Arm </th>
+    <td mat-cell *matCellDef="let user">
+      <mat-form-field>
+        <mat-select [(value)]="user.rctArm" (selectionChange)="onRctArmChange(user.patientId, $event.value)">
+          <mat-option value="control">Control</mat-option>
+          <mat-option value="intervention">Intervention</mat-option>
+        </mat-select>
+      </mat-form-field>
+    </td>
+  </ng-container>
+
+
+  <ng-container matColumnDef="baseline">
+    <th mat-header-cell *matHeaderCellDef> Baseline </th>
+    <td mat-cell *matCellDef="let user">  Add baseline data here </td>
+  </ng-container>
+
+
+  <ng-container matColumnDef="f1">
+    <th mat-header-cell *matHeaderCellDef> F1 </th>
+    <td mat-cell *matCellDef="let user"> Add F1 data here </td>
+  </ng-container>
+
+
+  <ng-container matColumnDef="f2">
+    <th mat-header-cell *matHeaderCellDef> F2 </th>
+    <td mat-cell *matCellDef="let user"> Add F2 data here  </td>
+  </ng-container>
+
+  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+  <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+</table> 
+-->
