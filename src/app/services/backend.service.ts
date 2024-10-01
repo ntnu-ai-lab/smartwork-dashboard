@@ -11,6 +11,7 @@ export class BackendService {
   private baseUrl = "http://localhost:8014/dashboard/getPatientInfo"
   private activateUrl = "http://localhost:8014/dashboard/activate"
   private RCTGroupUrl = "http://localhost:8014/dashboard/setRCTGroup"
+   private deactivateUrl = "http://localhost:8014/dashboard/deactivate"
   private lspatients: Lspatient[] = [];
 
   constructor(private http: HttpClient) { }
@@ -27,5 +28,10 @@ export class BackendService {
   setRCTGroup(patient: {}): Observable<any> {
     console.log(patient)
     return this.http.post(this.RCTGroupUrl, patient);
+  }
+
+  deactivatePatient(lspatient: Lspatient): Observable<any> {
+
+    return this.http.post(this.deactivateUrl, lspatient);
   }
 }

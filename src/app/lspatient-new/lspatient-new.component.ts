@@ -1,13 +1,13 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit} from '@angular/core';
 import { Lspatient } from 'src/app/common/lspatient';
 import { BackendService } from 'src/app/services/backend.service';
 
 @Component({
-  selector: 'app-lspatient-list',
-  templateUrl: './lspatient-list.component.html',
-  styleUrls: ['./lspatient-list.component.css']
+  selector: 'app-lspatient-new',
+  templateUrl: './lspatient-new.component.html',
+  styleUrls: ['./lspatient-new.component.css']
 })
-export class LspatientListComponent implements OnInit {
+export class LspatientNewComponent implements OnInit {
 
   lspatients: Lspatient[] = [];
   filteredPatients: Lspatient[] = [];
@@ -23,23 +23,52 @@ export class LspatientListComponent implements OnInit {
     listPatients() {
       this.backendService.getPatientInfo().subscribe((data:Lspatient[]) =>
         { 
-          // Iterate over the data and set groupConfirmed based on rctGroup
-          this.lspatients = data.map(patient => ({
-            ...patient,
-          groupConfirmed: patient.rctGroup !== null
+      this.lspatients = data.map(patient => ({
+        ...patient,
+        groupConfirmed: patient.rctGroup !== null
       }));
 
       // Assuming you want filteredPatients to be the same as lspatients initially
       this.filteredPatients = [...this.lspatients];
-      this.filteredPatients.sort((b, a) => {
-        return new Date(a.baselineActivated).getTime() - new Date(b.baselineActivated).getTime();
-      });
 
       console.log(this.lspatients);
         }
       )
   }
 
+  calledSubmit(user: Lspatient): void {
+    user.called = true;
+    console.log('Called status for: ', user.firstname, user.lastname);
+   
+  }
+
+  activateBaseline(user: Lspatient): void {
+    user.activeStatus = "active";
+    console.log('Activating Baseline questionaire for: ', user.firstname, user.lastname);
+    this.backendService.activateBaseline(user).subscribe();
+    /*
+    this.backendService.activateBaseline(user).subscribe((data:any) => {
+      if (data) {
+      user.baselineActivated = data.BaseLineDate;
+      user.follwoup2Date = data.Followup2Date;
+      user.follwoup3Date = data.Followup3Date;
+      console.log('Data received and assigned:', data);
+    } else {
+      console.error('Received null or undefined data:', data);
+    }
+  }, (error: any) => {
+    console.error('Error activating baseline:', error);
+  });
+  
+*/
+  }
+  
+  deactivatePatient(user: Lspatient, comment: string): void {
+    user.activeStatus = "Inactive"
+    user.deactivationComment = comment
+    console.log('Deactivating Patient: ', user.firstname, user.lastname, comment);
+    this.backendService.deactivatePatient(user).subscribe();
+  }
 
   onRctArmChange(user: Lspatient, value:any): void {
     user.rctGroup = value;
@@ -57,7 +86,8 @@ export class LspatientListComponent implements OnInit {
       rctGroup: user.rctGroup,
       firstname: user.firstname,
       lastname: user.lastname,
-      language: user.language
+      language: user.language,
+      
   };
     
     this.backendService.setRCTGroup(Patient).subscribe();
@@ -76,7 +106,6 @@ export class LspatientListComponent implements OnInit {
                                                             );
   }
 }
+{
 
-     
-
-
+}

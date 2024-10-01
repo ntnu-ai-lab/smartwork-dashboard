@@ -1,0 +1,107 @@
+
+
+<div class="container text-center mt-1 mb-1">
+    <div class="d-flex justify-content-end mb-3">
+    <mat-form-field class="mt-3 mb-3">
+      <input matInput (keyup)="applyFilter($event)" placeholder="Search">
+    </mat-form-field>
+    </div>
+    <h4> Here, please choose to activate or deactivate the users. Activation will trigger the Baseline questionnaire.</h4>
+    
+    
+    <table class="table table-striped mt-5 mb-2">
+        <thead>
+            <tr>
+                <th>Study Id </th>
+                <th>User Name </th>
+                <th>Name </th>
+                <th> Phone </th>
+                <th>Email</th>
+                <th>Called</th>
+                <th>Activation </th>
+                <th>Comment for Deactivation </th>
+                <th>Deactivate </th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let user of filteredPatients">
+                <ng-container *ngIf="user.activeStatus == null ">
+                <td>{{user.navId}}</td>
+                <td>{{user.patientId}} </td>
+                <td> {{user.firstname}} {{ user.lastname }}</td>
+                <td>{{user.phone}}</td>
+                <td>{{user.email}}</td>
+                <td><button [disabled]="user.called" mat-raised-button class="hover-class" (click)="calledSubmit(user)"> Yes </button>
+                    
+              </td>
+              <td><button [disabled]="user.activeStatus !== null || !user.called " flat-raised class="btn btn-sm btn-success mx-1" (click)="activateBaseline(user)"> Activate Baseline</button>
+                
+          </td>
+          <td colspan="1">
+            <form #form="ngForm">
+            <input type="text"  name="reason" placeholder="Enter reason for deactivation" class="form-control" ngModel />
+          </form>
+          </td>
+          <td><button [disabled]="!user.called" flat-raised class="btn btn-sm btn-danger mx-1" (click)="deactivatePatient(user, form.value.reason)"> Deactivate Patient</button></td>
+        
+                </ng-container>
+              </tr>
+        </tbody>
+    </table> 
+    </div>
+    
+    
+    <!--
+           <td>{{user.baselineActivated  | date }}</td>
+          <td>{{user.follwoup2Date  | date }}</td>
+          <td>{{user.follwoup3Date  | date }}</td>
+          <td *ngIf="user.rctGroup; else groupSelect">{{ user.rctGroup }}</td>
+          
+          <ng-template #groupSelect>
+            <td>
+              <select #group (change)="onRctArmChange(user, group.value)">
+                <option default>Select group</option>
+                <option value="intervention">Intervention</option>
+                <option value="control">Control</option>
+              </select>
+            </td>
+          </ng-template>
+            
+           <td><button [disabled]="user.groupConfirmed" flat-raised 
+            btn btn-sm btn-success mx-1 (click)="onRctArmConfirm(user)">  {{ user.groupConfirmed ? 'Completed' : 'Confirm' }} 
+                </button></td>
+                
+              </tr>
+        </tbody>
+    
+    Conditional Rendering based on activation or deactivation status 
+     <ng-container *ngIf="!user.deactivated; else deactivatedState">
+      <td>{{user.baselineActivated  | date }}</td>
+      <td>{{user.follwoup2Date  | date }}</td>
+      <td>{{user.follwoup3Date  | date }}</td>
+      <td *ngIf="user.rctGroup; else groupSelect">{{ user.rctGroup }}</td>
+      
+      <ng-template #groupSelect>
+        <td>
+          <select #group (change)="onRctArmChange(user, group.value)">
+            <option default>Select group</option>
+            <option value="intervention">Intervention</option>
+            <option value="control">Control</option>
+          </select>
+        </td>
+      </ng-template>
+        
+       <td><button [disabled]="user.groupConfirmed" flat-raised 
+        btn btn-sm btn-success mx-1 (click)="onRctArmConfirm(user)">  {{ user.groupConfirmed ? 'Completed' : 'Confirm' }} 
+            </button></td>
+          </ng-container>
+    
+    
+     
+        <ng-template #deactivatedState>
+          <td colspan="5">
+            <input type="text" placeholder="Enter reason for deactivation" class="form-control" [(ngModel)]="user.deactivationComment" />
+          </td>
+        </ng-template>-->
+    
+    
