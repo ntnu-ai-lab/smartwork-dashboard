@@ -38,6 +38,11 @@ export class LspatientInactiveComponent implements OnInit {
       )
   }
 
+  deletePatient(user: Lspatient): void {
+    this.backendService.deletePatient(user).subscribe();
+  }
+
+  
   applyFilter(event: Event): void {
     let searchTerm = (event.target as HTMLInputElement).value;
     console.log(searchTerm)

@@ -8,6 +8,7 @@ import { LspatientListComponent } from './components/lspatient-list/lspatient-li
 import { BackendService } from './services/backend.service';
 
 import { MatButtonModule } from '@angular/material/button';
+import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatSelectModule } from '@angular/material/select';
 import { MatTableModule } from '@angular/material/table';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -18,6 +19,7 @@ import { MatToolbarModule} from "@angular/material/toolbar";
 import { LspatientNewComponent } from './lspatient-new/lspatient-new.component';
 import { LspatientInactiveComponent } from './lspatient-inactive/lspatient-inactive.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MatRadioModule } from '@angular/material/radio';
 
 @NgModule({
   declarations: [
@@ -35,8 +37,10 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     MatButtonModule,
     MatSelectModule,
     MatTableModule,
+    MatCheckboxModule,
     MatFormFieldModule,
     MatInputModule,
+    MatRadioModule,
     FormsModule,
     MatToolbarModule
 

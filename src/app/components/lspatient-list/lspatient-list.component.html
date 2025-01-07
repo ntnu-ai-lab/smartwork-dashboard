@@ -12,7 +12,7 @@
 <table class="table table-striped">
     <thead>
         <tr>
-            <th>Study Id </th>
+            <th>Source</th>
             <th>User Name </th>
             <th>Name </th>
             <th> Phone </th>
@@ -54,7 +54,21 @@
 
 
 
-  <td [ngClass]="{'bg-light-green': user.follwoup2Completed}">
+  <td [ngClass]="{'bg-light-green': user.follwoup1Completed}">
+        <!-- If baselineCompleted is available, show it with a checkmark -->
+        <ng-container *ngIf="user.follwoup1Completed; else showFollowup1Date">
+          {{ user.follwoup1Completed | date }}
+          <span class="text-success ml-1" style="display: inline;">✔</span>
+        </ng-container>
+
+        <!-- Else show baselineActivated with a pending marker -->
+        <ng-template #showFollowup1Date>
+          {{ user.follwoup1Date | date }}
+          <mat-icon class="text-warning ml-1" style="display: inline;">schedule</mat-icon>
+        </ng-template>
+      </td>
+
+      <td [ngClass]="{'bg-light-green': user.follwoup2Completed}">
         <!-- If baselineCompleted is available, show it with a checkmark -->
         <ng-container *ngIf="user.follwoup2Completed; else showFollowup2Date">
           {{ user.follwoup2Completed | date }}
@@ -77,31 +91,21 @@
 
         <!-- Else show baselineActivated with a pending marker -->
         <ng-template #showFollowup3Date>
-          {{ user.follwoup3Date | date }}
-          <mat-icon class="text-warning ml-1" style="display: inline;">schedule</mat-icon>
-        </ng-template>
-      </td>
-
-      <td [ngClass]="{'bg-light-green': user.follwoup4Completed}">
-        <!-- If baselineCompleted is available, show it with a checkmark -->
-        <ng-container *ngIf="user.follwoup4Completed; else showFollowup4Date">
-          {{ user.follwoup4Completed | date }}
-          <span class="text-success ml-1" style="display: inline;">✔</span>
-        </ng-container>
-
-        <!-- Else show baselineActivated with a pending marker -->
-        <ng-template #showFollowup4Date>
-          {{ user.follwoup4Date | date }} 
+          {{ user.follwoup3Date | date }} 
           <mat-icon class="text-warning ml-1" style="display: inline;" >schedule</mat-icon>
         </ng-template>
       </td>
 
       <td *ngIf="user.rctGroup; else groupSelect">{{ user.rctGroup }}</td>
       
+
+    
       <ng-template #groupSelect>
         <td>
-          <select #group (change)="onRctArmChange(user, group.value)">
-            <option default>Select group</option>
+          <select #group 
+          [disabled]="user.groupConfirmed" 
+          (change)="onRctArmChange(user, group.value)">
+            <option  value="" disabled>Select group</option>
             <option value="intervention">Intervention</option>
             <option value="control">Control</option>
           </select>
@@ -111,6 +115,7 @@
        <td><button [disabled]="user.groupConfirmed" flat-raised 
         btn btn-sm btn-success mx-1 (click)="onRctArmConfirm(user)">  {{ user.groupConfirmed ? 'Completed' : 'Confirm' }} 
             </button></td>
+            <!--<td><button flat-raised class="btn btn-sm btn-danger mx-1" (click)="deletePatient(user)">Delete</button></td>-->
           </ng-container>
   
           </tr>

@@ -11,6 +11,10 @@ export class LspatientListComponent implements OnInit {
 
   lspatients: Lspatient[] = [];
   filteredPatients: Lspatient[] = [];
+  groups: string[] = [
+    "Control",
+    "Intervention"
+  ];
 
     constructor(
       private backendService: BackendService
@@ -63,6 +67,11 @@ export class LspatientListComponent implements OnInit {
     this.backendService.setRCTGroup(Patient).subscribe();
     
   
+  }
+
+  
+  deletePatient(user: Lspatient): void {
+    this.backendService.deletePatient(user).subscribe();
   }
   applyFilter(event: Event): void {
     let searchTerm = (event.target as HTMLInputElement).value;

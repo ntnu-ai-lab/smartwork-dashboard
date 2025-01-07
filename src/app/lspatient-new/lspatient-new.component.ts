@@ -37,8 +37,7 @@ export class LspatientNewComponent implements OnInit {
   }
 
   calledSubmit(user: Lspatient): void {
-    user.called = true;
-    console.log('Called status for: ', user.firstname, user.lastname);
+    console.log('Consent status for: ', user.firstname, user.lastname, user.consented);
    
   }
 
@@ -94,6 +93,13 @@ export class LspatientNewComponent implements OnInit {
     
   
   }
+
+  deletePatient(user: Lspatient): void {
+    this.backendService.deletePatient(user).subscribe();
+  }
+
+
+
   applyFilter(event: Event): void {
     let searchTerm = (event.target as HTMLInputElement).value;
     console.log(searchTerm)

@@ -3,20 +3,20 @@ export interface Lspatient {
     email: string;
     phone: string;
     navId: string;
-    rctGroup : string;
+    rctGroup : string | null;
     firstname: string;
     lastname: string;
     language: string;
-    called: Boolean | false;
+    consented: Boolean | null;
     activeStatus: string | null;
     baselineActivated: Date;
     baselineCompleted: Date;
+    follwoup1Date: Date;
+    follwoup1Completed:  Date;
     follwoup2Date: Date;
     follwoup2Completed:  Date;
     follwoup3Date: Date;
     follwoup3Completed:  Date;
-    follwoup4Date: Date;
-    follwoup4Completed:  Date;
     groupConfirmed: Boolean;
     deactivationComment: String;
     
