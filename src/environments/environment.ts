@@ -1,5 +1,5 @@
 export const environment = {
-    production: false,
+    production: true,
     backend: {
       endpoints:{
         baseUrl: "http://smartwork-dev-backend-limesurvey.idi.ntnu.no/dashboard/getPatientInfo",
