@@ -2,6 +2,7 @@ import { Component, OnInit} from '@angular/core';
 import { Lspatient } from 'src/app/common/lspatient';
 import { BackendService } from 'src/app/services/backend.service';
 
+
 @Component({
   selector: 'app-lspatient-new',
   templateUrl: './lspatient-new.component.html',
@@ -37,7 +38,17 @@ export class LspatientNewComponent implements OnInit {
   }
 
   calledSubmit(user: Lspatient): void {
-    console.log('Consent status for: ', user.firstname, user.lastname, user.consented);
+    console.log('Consent status for: ', user.firstname, user.lastname, user.called);
+   
+  }
+
+  consentSentSubmit(user: Lspatient): void {
+    console.log('Consent Sent for: ', user.firstname, user.lastname, user.consentSent);
+   
+  }
+
+  consentApprovedSubmit(user: Lspatient): void {
+    console.log('Consent Approved for: ', user.firstname, user.lastname, user.consentApproved);
    
   }
 
@@ -68,14 +79,16 @@ export class LspatientNewComponent implements OnInit {
     console.log('Deactivating Patient: ', user.firstname, user.lastname, comment);
     this.backendService.deactivatePatient(user).subscribe();
   }
-
+ /*
   onRctArmChange(user: Lspatient, value:any): void {
     user.rctGroup = value;
     console.log('RCT Arm for:', user.firstname, user.lastname, user.rctGroup);
   }
 
   onRctArmConfirm(user:Lspatient): void {
-    user.groupConfirmed = true;
+    if (user.rctGroup) {
+      user.groupConfirmed = true;
+    }
     console.log('Patient: ', user.rctGroup);
     const Patient = {
       patientId: user.patientId,
@@ -90,9 +103,9 @@ export class LspatientNewComponent implements OnInit {
   };
     
     this.backendService.setRCTGroup(Patient).subscribe();
-    
   
   }
+    */
 
   deletePatient(user: Lspatient): void {
     this.backendService.deletePatient(user).subscribe();

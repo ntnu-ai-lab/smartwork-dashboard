@@ -1,6 +1,7 @@
 
 
-<div class="container text-center mt-1 mb-1">
+<!--<div class="container text-center mt-1 mb-1">-->
+  <div class="container-fluid custom-container text-center mt-2 mb-2">
     <div class="d-flex justify-content-end mb-3">
     <mat-form-field class="mt-3 mb-3">
       <input matInput (keyup)="applyFilter($event)" placeholder="Search">
@@ -17,7 +18,9 @@
                 <th>Name </th>
                 <th> Phone </th>
                 <th>Email</th>
-                <th>Called</th>
+                <th>User Called</th>
+                <th>Consent Sent</th>
+                <th>Consent Approved</th>
                 <th>Activation </th>
                 <th>Comment for Deactivation </th>
                 <th>Deactivate </th>
@@ -34,18 +37,26 @@
                 <td>{{user.email}}</td>
                 <td>
                   <mat-checkbox 
-                    [(ngModel)]="user.consented" 
+                    [(ngModel)]="user.called" 
                     (change)="calledSubmit(user)" 
-                    [ngStyle]="{ 'color': user.consented ? 'green' : '' }">
+                    [ngStyle]="{ 'color': user.called ? 'green' : '' }">
                   </mat-checkbox>
                 </td>
-                <!--<td>
-                    <mat-radio-group [(ngModel)]="user.consented" (change)="calledSubmit(user)">
-                      <mat-radio-button value="true">Yes</mat-radio-button>
-                      <mat-radio-button value="false">No</mat-radio-button>
-                    </mat-radio-group>
-                </td>-->
-                <td><button [disabled]="user.consented === null" flat-raised class="btn btn-sm btn-success mx-1" (click)="activateBaseline(user)"> Activate Baseline</button>
+                <td>
+                  <mat-checkbox 
+                    [(ngModel)]="user.consentSent" 
+                    (change)="consentSentSubmit(user)" 
+                    [ngStyle]="{ 'color': user.consentSent ? 'green' : '' }">
+                  </mat-checkbox>
+                  <td>
+                    <mat-checkbox 
+                      [(ngModel)]="user.consentApproved" 
+                      (change)="consentApprovedSubmit(user)" 
+                      [ngStyle]="{ 'color': user.consentApproved ? 'green' : '' }">
+                    </mat-checkbox>
+                  </td>
+              
+                <td><button [disabled]="!user.consentApproved" flat-raised class="btn btn-sm btn-success mx-1" (click)="activateBaseline(user)"> Activate Baseline</button>
                 </td>
               
           <td colspan="1">
@@ -53,7 +64,7 @@
             <input type="text"  name="reason" placeholder="Enter reason for deactivation" class="form-control" ngModel />
           </form>
           </td>
-          <td><button [disabled]="user.consented === null" flat-raised class="btn btn-sm btn-danger mx-1" (click)="deactivatePatient(user, form.value.reason)"> Deactivate Patient</button></td>
+          <td><button [disabled]="user.consentApproved === null" flat-raised class="btn btn-sm btn-danger mx-1" (click)="deactivatePatient(user, form.value.reason)"> Deactivate Patient</button></td>
         
           <!--<td><button flat-raised class="btn btn-sm btn-danger mx-1" (click)="deletePatient(user)"> Delete Patient</button></td>-->
                 </ng-container>

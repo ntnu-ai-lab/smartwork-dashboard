@@ -7,7 +7,9 @@ export interface Lspatient {
     firstname: string;
     lastname: string;
     language: string;
-    consented: Boolean | null;
+    called: boolean | null;
+    consentSent: boolean | null;
+    consentApproved: boolean | null;
     activeStatus: string | null;
     baselineActivated: Date;
     baselineCompleted: Date;
@@ -17,7 +19,8 @@ export interface Lspatient {
     follwoup2Completed:  Date;
     follwoup3Date: Date;
     follwoup3Completed:  Date;
-    groupConfirmed: Boolean;
+    groupConfirmed: boolean;
     deactivationComment: String;
+    appLoginStatus:  boolean | null;
     
 }

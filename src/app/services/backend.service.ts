@@ -9,13 +9,6 @@ import { environment } from 'src/environments/environment';
 })
 export class BackendService {
 
-  //private baseUrl = "http://localhost:8014/dashboard/getPatientInfo"
-  //private activateUrl = "http://localhost:8014/dashboard/activate"
-  //private RCTGroupUrl = "http://localhost:8014/dashboard/setRCTGroup"
-  //private deactivateUrl = "http://localhost:8014/dashboard/deactivate"
-  //private deleteUrl = "http://localhost:8014/dashboard/delete"
-  //private lspatients: Lspatient[] = [];
-
   constructor(private http: HttpClient) { }
 
   getPatientInfo(): Observable<Lspatient[]> {
@@ -29,6 +22,7 @@ export class BackendService {
 
   setRCTGroup(patient: {}): Observable<any> {
     console.log(patient)
+    // If RCT group is "Intervention", implement the backend functionality to send mail with link to reset password page
     return this.http.post(environment.backend.endpoints.RCTGroupUrl, patient);
   }
 
@@ -40,4 +34,10 @@ export class BackendService {
   deletePatient(lspatient: Lspatient): Observable<any> {
     return this.http.post(environment.backend.endpoints.deleteUrl, lspatient);
   }
+
+  triggerpasswordReset(lspatient: Lspatient): Observable<any> {
+    console.log('Resetting password for:', lspatient);
+    return this.http.post(environment.backend.endpoints.resetPasswordUrl, lspatient);
+  }
+
 }

@@ -1,14 +1,20 @@
-<div class="container text-center mt-3 mb-3">
+
+
+  <!--<app-lspatient-list></app-lspatient-list>-->
+
+<div class="container text-center mt-3 mb-3" *ngIf="authService.isLoggedIn()">
   <div style="display: flex; justify-content: space-between; align-items: center;">
     <img src="assets/images/smartwork_logo.png" width="150" alt="Smartwork Logo" />
     <h2 style="margin: 0;">SmaRTWork Research Dashboard</h2>
     <img src="assets/images/ntnu_logo.png" width="200" alt="NTNU Logo" />
-
   </div>
-  <button  class="btn btn-primary mx-2" [routerLink]="['/new']">Go to new users</button>
-  <button class="btn btn-primary mx-5" [routerLink]="['/listActive']"> View existing users</button>
-  <button class="btn btn-primary mx-2" [routerLink]="['/listInactive']"> View Inactive users</button>
-
-  <!--<app-lspatient-list></app-lspatient-list>-->
+  
+  <div *ngIf="authService.isLoggedIn()">
+    
+    <button class="btn btn-primary mx-2" [routerLink]="['/new']">Go to new users</button>
+    <button class="btn btn-primary mx-5" [routerLink]="['/listActive']">View existing users</button>
+    <button class="btn btn-primary mx-2" [routerLink]="['/listInactive']">View Inactive users</button>
+    <button class="btn btn-danger mx-2" (click)="logout()">Logout</button>
+  </div>
 </div>
 <router-outlet></router-outlet>

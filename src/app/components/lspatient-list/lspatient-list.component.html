@@ -1,4 +1,5 @@
-<div class="container text-center mt-1 mb-1">
+<!--<div class="container text-center mt-1 mb-1">-->
+  <div class="container-fluid custom-container text-center mt-2 mb-2">
   <div class="d-flex justify-content-end mb-3">
   <mat-form-field class="mt-3 mb-3">
     <input matInput (keyup)="applyFilter($event)" placeholder="Search">
@@ -22,7 +23,10 @@
             <th>F2</th>
             <th>F3 </th>
             <th>RCT Arm </th>
-           <th >Actions </th>
+           <th colspan="2">Actions </th>
+           <th>App-Status </th>
+           
+      
            
 
         </tr>
@@ -96,29 +100,89 @@
         </ng-template>
       </td>
 
-      <td *ngIf="user.rctGroup; else groupSelect">{{ user.rctGroup }}</td>
       
-
-    
+      <td *ngIf="user.rctGroup; else groupSelect">{{user.rctGroup}}</td>
       <ng-template #groupSelect>
-        <td>
-          <select #group 
+        <select #group 
+          [(ngModel)] = "user.rctGroup" 
+          (change)="onRctArmChange(user, group.value)"
+          class="form-control">
+          <option value="" disabled>Select a group</option>
+          <option *ngFor="let group of groups" [value]="group.value">{{group.label}}</option>
+      </select>
+    </ng-template>
+      
+    <td><button [disabled]="user.groupConfirmed" 
+      [ngClass]="user.groupConfirmed ? 'btn btn-sm btn-secondary mx-1' : 'btn btn-sm btn-warning mx-1'" 
+      (click)="onConfirmWarning(user)">  {{ user.groupConfirmed ? 'Completed' : 'Confirm' }} 
+        </button></td>
+ <!-- Should we allow users to Reset after Confirming the group? there is a warning, so maybeit should not be allowed to resert once set.-->
+        <td><button 
           [disabled]="user.groupConfirmed" 
-          (change)="onRctArmChange(user, group.value)">
-            <option  value="" disabled>Select group</option>
-            <option value="intervention">Intervention</option>
-            <option value="control">Control</option>
-          </select>
-        </td>
-      </ng-template>
+          class="btn btn-sm btn-danger mx-1"(click)="onGroupReset(user)">Reset</button>
+      </td> 
+         
+    <!-- If rctGroup is intervention, fecth status from backend, else status is None-->
+    <td [ngClass]="{'bg-light-green': user.appLoginStatus}">
+      <!-- Show "None" for Control Group -->
+      <ng-container *ngIf="user.rctGroup === 'Intervention'; else NoAppStatus">
         
-       <td><button [disabled]="user.groupConfirmed" flat-raised 
-        btn btn-sm btn-success mx-1 (click)="onRctArmConfirm(user)">  {{ user.groupConfirmed ? 'Completed' : 'Confirm' }} 
-            </button></td>
-            <!--<td><button flat-raised class="btn btn-sm btn-danger mx-1" (click)="deletePatient(user)">Delete</button></td>-->
-          </ng-container>
+        <!-- Show Green Checkmark if App Login is Enabled -->
+        <ng-container *ngIf="user.appLoginStatus; else TriggerPasswordReset">
+          <span class="text-success ml-1" style="display: inline;">✔</span>
+        </ng-container>
+    
+        <!-- Show Password Reset Button if App Login is False -->
+        <ng-template #TriggerPasswordReset>
+          <button class="btn btn-sm btn-warning mx-1 hover-effect" 
+          [disabled]="!user.groupConfirmed" 
+                  (click)="triggerPasswordReset(user)">
+            Trigger Password Reset Email
+          </button>
+        </ng-template>
+    
+      </ng-container>
+    
+      <!-- Default Status for Control Group -->
+      <ng-template #NoAppStatus>
+        None
+        <mat-icon class="text-warning ml-1" style="display: inline;">not_interested</mat-icon>
+      </ng-template>
+    </td>
+    
+    
+  </ng-container>
   
+
           </tr>
     </tbody>
 </table> 
 </div>
+
+<!--<td *ngIf="user.rctGroup; else groupSelect">
+          {{user.rctGroup}}
+        </td>
+        <ng-template #groupSelect>
+          <mat-form-field appearance="outline" style="width: 200px;">
+            <mat-select
+              [(ngModel)]="user.rctGroup"
+              (selectionChange)="onRctArmChange(user, $event.value)"
+              placeholder="Select a group">
+                <mat-option *ngFor="let group of groups" [value]="group.value">
+                {{group.label}}
+                </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </ng-template>
+      
+      <td>
+        <button 
+          mat-raised-button 
+          color="primary"
+          [disabled]="user.rctGroup" 
+          (click)="onRctArmConfirm(user)"
+          class="mx-1">
+          {{ user.groupConfirmed ? 'Completed' : 'Confirm' }}
+        </button>
+      </td>
+      -->

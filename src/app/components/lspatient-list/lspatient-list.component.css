@@ -6,3 +6,14 @@
     background-color: #95eba9; /* Light green background */
     color: #155724; /* Dark green text (optional, can remove this if not needed) */
   }
+
+  .custom-container {
+    width: 75%;  /* or any other percentage */
+    margin: 0 auto;
+    padding: 0 15px;
+}
+.hover-effect:hover:not(:disabled) {
+  transform: translateY(-4px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  transition: all 0.2s ease;
+}
