@@ -22,7 +22,6 @@ export class BackendService {
 
   setRCTGroup(patient: {}): Observable<any> {
     console.log(patient)
-    // If RCT group is "Intervention", implement the backend functionality to send mail with link to reset password page
     return this.http.post(environment.backend.endpoints.RCTGroupUrl, patient);
   }
 

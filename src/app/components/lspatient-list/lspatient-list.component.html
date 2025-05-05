@@ -135,9 +135,13 @@
         <!-- Show Password Reset Button if App Login is False -->
         <ng-template #TriggerPasswordReset>
           <button class="btn btn-sm btn-warning mx-1 hover-effect" 
-          [disabled]="!user.groupConfirmed" 
-                  (click)="triggerPasswordReset(user)">
-            Trigger Password Reset Email
+          [disabled]="!user.groupConfirmed || isResetting" 
+                  (click)="triggerPasswordReset(user)"
+                  [ngClass]="{'btn-pressed': isResetting}">
+                  <span *ngIf="!isResetting">Trigger Password Reset Email</span>
+                  <span *ngIf="isResetting">
+                    <i class="fas fa-spinner fa-spin me-1"></i>Sending...
+                  </span>
           </button>
         </ng-template>
     

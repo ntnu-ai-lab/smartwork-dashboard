@@ -12,6 +12,7 @@ export class LspatientListComponent implements OnInit {
 
   lspatients: Lspatient[] = [];
   filteredPatients: Lspatient[] = [];
+  isResetting: boolean = false;
   
   groups: {value: string, label: string}[] = [
     { value: "Control", label: "Control" },
@@ -90,8 +91,18 @@ export class LspatientListComponent implements OnInit {
   }
 
   triggerPasswordReset(user: Lspatient): void {
+    this.isResetting = true;
     console.log('Triggering password reset for:', user.firstname, user.lastname);
-    this.backendService.triggerpasswordReset(user).subscribe();
+    this.backendService.triggerpasswordReset(user).subscribe(
+      response => {
+        // Handle success
+        this.isResetting = false;
+      },
+      error => {
+        // Handle error
+        this.isResetting = false;
+      }
+    );
   }
   
 
