@@ -20,6 +20,11 @@ export class BackendService {
     return this.http.post(environment.backend.endpoints.activateUrl, lspatient);
   }
 
+  updatedConsent(lspatient: Lspatient): Observable<any> {
+    console.log(lspatient)
+    return this.http.post(environment.backend.endpoints.updatedConsentURL, lspatient);
+  }
+
   setRCTGroup(patient: {}): Observable<any> {
     console.log(patient)
     return this.http.post(environment.backend.endpoints.RCTGroupUrl, patient);

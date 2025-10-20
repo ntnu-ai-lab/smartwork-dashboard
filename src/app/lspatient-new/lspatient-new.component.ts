@@ -39,17 +39,18 @@ export class LspatientNewComponent implements OnInit {
 
   calledSubmit(user: Lspatient): void {
     console.log('Consent status for: ', user.firstname, user.lastname, user.called);
-   
+    this.backendService.updatedConsent(user).subscribe();
   }
 
   consentSentSubmit(user: Lspatient): void {
     console.log('Consent Sent for: ', user.firstname, user.lastname, user.consentSent);
+    this.backendService.updatedConsent(user).subscribe();
    
   }
 
   consentApprovedSubmit(user: Lspatient): void {
     console.log('Consent Approved for: ', user.firstname, user.lastname, user.consentApproved);
-   
+    this.backendService.updatedConsent(user).subscribe();
   }
 
   activateBaseline(user: Lspatient): void {
