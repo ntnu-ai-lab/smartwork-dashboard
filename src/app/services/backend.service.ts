@@ -2,46 +2,46 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Lspatient } from '../common/lspatient';
-import { environment } from 'src/environments/environment';
+import { ConfigService } from './config.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class BackendService {
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, private config: ConfigService) { }
 
   getPatientInfo(): Observable<Lspatient[]> {
-    return this.http.get<Lspatient[]>(environment.backend.endpoints.baseUrl);
+    return this.http.get<Lspatient[]>(this.config.endpoints.baseUrl);
   }
 
   activateBaseline(lspatient: Lspatient): Observable<any> {
     console.log(lspatient)
-    return this.http.post(environment.backend.endpoints.activateUrl, lspatient);
+    return this.http.post(this.config.endpoints.activateUrl, lspatient);
   }
 
   updatedConsent(lspatient: Lspatient): Observable<any> {
     console.log(lspatient)
-    return this.http.post(environment.backend.endpoints.updatedConsentURL, lspatient);
+    return this.http.post(this.config.endpoints.updatedConsentURL, lspatient);
   }
 
   setRCTGroup(patient: {}): Observable<any> {
     console.log(patient)
-    return this.http.post(environment.backend.endpoints.RCTGroupUrl, patient);
+    return this.http.post(this.config.endpoints.RCTGroupUrl, patient);
   }
 
   deactivatePatient(lspatient: Lspatient): Observable<any> {
 
-    return this.http.post(environment.backend.endpoints.deactivateUrl, lspatient);
+    return this.http.post(this.config.endpoints.deactivateUrl, lspatient);
   }
 
   deletePatient(lspatient: Lspatient): Observable<any> {
-    return this.http.post(environment.backend.endpoints.deleteUrl, lspatient);
+    return this.http.post(this.config.endpoints.deleteUrl, lspatient);
   }
 
   triggerpasswordReset(lspatient: Lspatient): Observable<any> {
     console.log('Resetting password for:', lspatient);
-    return this.http.post(environment.backend.endpoints.resetPasswordUrl, lspatient);
+    return this.http.post(this.config.endpoints.resetPasswordUrl, lspatient);
   }
 
 }
