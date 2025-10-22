@@ -19,7 +19,7 @@ export const environment = {
         // resetPasswordUrl: "http://localhost:8014/dashboard/resetPassword",
         // updatedConsentURL: "http://localhost:8014/dashboard/updatedConsent"
 
-        baseUrl: (window as any).env?.BACKEND_BASE_URL || "http://localhost:8014/dashboard/getPatientInfo",
+        baseUrl: (window as any).env?.BASE_URL || "http://localhost:8014/dashboard/getPatientInfo",
         activateUrl: (window as any).env?.ACTIVATE_URL || "http://localhost:8014/dashboard/activate",
         RCTGroupUrl: (window as any).env?.RCTGROUP_URL || "http://localhost:8014/dashboard/setRCTGroup",
         deactivateUrl: (window as any).env?.DEACTIVATE_URL || "http://localhost:8014/dashboard/deactivate",
