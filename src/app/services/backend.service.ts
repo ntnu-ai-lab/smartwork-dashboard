@@ -12,6 +12,7 @@ export class BackendService {
   constructor(private http: HttpClient, private config: ConfigService) { }
 
   getPatientInfo(): Observable<Lspatient[]> {
+    console.log('Using URL:', this.config.endpoints.baseUrl);
     return this.http.get<Lspatient[]>(this.config.endpoints.baseUrl);
   }
 
